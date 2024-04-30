@@ -1,0 +1,10 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "title": "A title",
+      "content": "Bla Bla",
+      "create_at": "01/02/2023"
+    }
+  ]
+}
