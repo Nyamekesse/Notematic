@@ -1,8 +1,8 @@
-import { TextCard } from 'components/TextCard/TextCard';
+import NoteList from 'containers/NoteList/NoteList';
 import React from 'react';
 
 const NoteBrowse = () => {
-  return <TextCard title="Super Note" subtitle="01/02/23" content={'blbllblb blblbl lblblbl lblbl'} />;
+  return <NoteList />;
 };
 
 export default NoteBrowse;
