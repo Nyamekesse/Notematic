@@ -1,16 +1,28 @@
 {
   "notes": [
     {
-      "id": 1,
+      "id": "1",
       "title": "A title",
       "content": "Bla Bla",
       "create_at": "01/02/2023"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "A title 2",
       "content": "Bla Bla",
       "create_at": "01/02/2023"
+    },
+    {
+      "id": "b090",
+      "title": "My Note title",
+      "content": "And once upon a time",
+      "crested_at": "03/05/2024"
+    },
+    {
+      "id": "4e3e",
+      "title": "Another note again",
+      "content": "This is my own note",
+      "crested_at": "03/05/2024"
     }
   ]
 }
