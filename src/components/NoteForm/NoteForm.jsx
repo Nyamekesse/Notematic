@@ -1,14 +1,42 @@
 import ButtonPrimary from 'components/ButtonPrimary/ButtonPrimary';
+import FieldError from 'components/FieldError/FieldError';
 import React, { useState } from 'react';
 import { PencilFill, TrashFill } from 'react-bootstrap-icons';
+import { ValidatorService } from 'services/validator';
 import style from './style.module.css';
+
+const VALIDATOR = {
+  title: (value) => {
+    return ValidatorService.min(value, 3) || ValidatorService.max(value, 20);
+  },
+  content: (value) => {
+    return ValidatorService.min(value, 3);
+  },
+};
 
 const NoteForm = ({ title, onClickEdit, onClickDelete, onSubmit }) => {
   const [formValues, setFormValues] = useState({ title: '', content: '' });
+  const [formErrors, setFormErrors] = useState({ title: true, content: true });
+
+  const validate = (fieldName, fieldValue) => {
+    setFormErrors({ ...formErrors, [fieldName]: VALIDATOR[fieldName](fieldValue) });
+  };
+
   const updateFormValues = (event) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
+    validate(name, value);
   };
+
+  const hasError = () => {
+    for (const fieldName in formErrors) {
+      if (formErrors[fieldName]) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const actionIcons = (
     <>
       <div className="col-1">{onClickEdit && <PencilFill className={style.icon} />}</div>
@@ -16,22 +44,26 @@ const NoteForm = ({ title, onClickEdit, onClickDelete, onSubmit }) => {
     </>
   );
   const titleInput = (
-    <>
+    <div className="mb-5">
       <label className="form-label">Title</label>
       <input type="text" name="title" className="form-control " onChange={updateFormValues} />
-    </>
+      <FieldError message={formErrors.title} />
+    </div>
   );
 
   const contentInput = (
-    <>
+    <div className="mb-5">
       <label className="form-label">Title</label>
       <textarea type="text" name="content" className="form-control" rows={5} onChange={updateFormValues} />
-    </>
+      <FieldError message={formErrors.content} />
+    </div>
   );
 
   const submitButton = (
     <div className={style.submit_button}>
-      <ButtonPrimary onClick={() => onSubmit(formValues)}>Submit</ButtonPrimary>
+      <ButtonPrimary onClick={() => onSubmit(formValues)} isDisabled={hasError()}>
+        Submit
+      </ButtonPrimary>
     </div>
   );
   return (
