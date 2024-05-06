@@ -14,9 +14,9 @@ const VALIDATOR = {
   },
 };
 
-const NoteForm = ({ title, onClickEdit, onClickDelete, onSubmit }) => {
-  const [formValues, setFormValues] = useState({ title: '', content: '' });
-  const [formErrors, setFormErrors] = useState({ title: true, content: true });
+const NoteForm = ({ title, onClickEdit, onClickDelete, onSubmit, isEditable = true, note }) => {
+  const [formValues, setFormValues] = useState({ title: note?.title, content: note?.content });
+  const [formErrors, setFormErrors] = useState({ title: note?.title ? undefined : true, content: note?.content ? undefined : true });
 
   const validate = (fieldName, fieldValue) => {
     setFormErrors({ ...formErrors, [fieldName]: VALIDATOR[fieldName](fieldValue) });
@@ -39,14 +39,14 @@ const NoteForm = ({ title, onClickEdit, onClickDelete, onSubmit }) => {
 
   const actionIcons = (
     <>
-      <div className="col-1">{onClickEdit && <PencilFill className={style.icon} />}</div>
-      <div className="col-1">{onClickDelete && <TrashFill className={style.icon} />}</div>
+      <div className="col-1">{onClickEdit && <PencilFill onClick={onClickEdit} className={style.icon} />}</div>
+      <div className="col-1">{onClickDelete && <TrashFill onClick={onClickDelete} className={style.icon} />}</div>
     </>
   );
   const titleInput = (
     <div className="mb-5">
       <label className="form-label">Title</label>
-      <input type="text" name="title" className="form-control " onChange={updateFormValues} />
+      <input type="text" name="title" className="form-control " onChange={updateFormValues} value={formValues.title} />
       <FieldError message={formErrors.title} />
     </div>
   );
@@ -54,7 +54,7 @@ const NoteForm = ({ title, onClickEdit, onClickDelete, onSubmit }) => {
   const contentInput = (
     <div className="mb-5">
       <label className="form-label">Title</label>
-      <textarea type="text" name="content" className="form-control" rows={5} onChange={updateFormValues} />
+      <textarea type="text" name="content" className="form-control" rows={5} onChange={updateFormValues} value={formValues.content} />
       <FieldError message={formErrors.content} />
     </div>
   );
@@ -74,8 +74,8 @@ const NoteForm = ({ title, onClickEdit, onClickDelete, onSubmit }) => {
         </div>
         {actionIcons}
       </div>
-      <div className={`mb-3 ${style.title_input_container}`}>{titleInput}</div>
-      <div className="mb-3">{contentInput}</div>
+      <div className={`mb-3 ${style.title_input_container}`}>{isEditable && titleInput}</div>
+      <div className="mb-3">{isEditable ? contentInput : <pre>{note.content}</pre>}</div>
       {onSubmit && submitButton}
     </div>
   );
