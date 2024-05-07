@@ -15,7 +15,7 @@ const VALIDATOR = {
 };
 
 const NoteForm = ({ title, onClickEdit, onClickDelete, onSubmit, isEditable = true, note }) => {
-  const [formValues, setFormValues] = useState({ title: note?.title, content: note?.content });
+  const [formValues, setFormValues] = useState({ title: note?.title || '', content: note?.content || '' });
   const [formErrors, setFormErrors] = useState({ title: note?.title ? undefined : true, content: note?.content ? undefined : true });
 
   const validate = (fieldName, fieldValue) => {
