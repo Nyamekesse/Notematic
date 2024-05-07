@@ -7,20 +7,21 @@ export const noteSlice = createSlice({
   },
   reducers: {
     setNoteList: (state, action) => {
-      state.noteList = action.payload.map(formatId);
+      state.noteList = action.payload;
     },
     addNote: (state, action) => {
-      state.noteList.push(formatId(action.payload));
+      state.noteList.push(action.payload);
+    },
+    updateNote: (state, action) => {
+      const indexToUpdate = state.noteList.findIndex((note) => note.id === action.payload.id);
+      state.noteList[indexToUpdate] = action.payload;
+    },
+    deleteNote: (state, action) => {
+      const filteredNoteList = state.noteList.filter((note) => note.id !== action.payload.id);
+      state.noteList = filteredNoteList;
     },
   },
 });
 
-function formatId(note) {
-  return {
-    ...note,
-    id: note.id.toString(),
-  };
-}
-
 export const noteReducer = noteSlice.reducer;
-export const { setNoteList, addNote } = noteSlice.actions;
+export const { setNoteList, addNote, updateNote, deleteNote } = noteSlice.actions;
