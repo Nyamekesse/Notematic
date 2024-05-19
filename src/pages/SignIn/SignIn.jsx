@@ -4,23 +4,27 @@ import Input from 'components/Input/Input';
 import AuthLayout from 'layouts/AuthLayout/AuthLayout';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setUser } from 'store/auth/auth-slice';
+import { toast } from 'utils/sweet-alert';
 import style from './style.module.css';
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const submit = async (event) => {
     event.preventDefault();
     try {
-      const user = await AuthAPI.signin(email, password)
-   dispatch(setUser(user))
+      const user = await AuthAPI.signin(email, password);
+      dispatch(setUser(user));
+      await toast('success', 'Auth succeed');
+      navigate('/');
     } catch (error) {
-      console.log("Auth failed");
+      console.log('Auth failed');
+      toast('error', error.message);
     }
-   
   };
   const form = (
     <div className={style.formContainer}>
