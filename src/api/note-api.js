@@ -1,28 +1,21 @@
-import axios from 'axios';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { FirebaseApp } from 'utils/firebase';
 
 const BASE_URL = 'http://localhost:3200/notes';
 
 export class NoteAPI {
-  static async create(note) {
-    return this.formatId((await axios.post(`${BASE_URL}`, note)).data);
-  }
+  static async create(note) {}
   static async fetchAll() {
-    return (await axios.get(`${BASE_URL}`)).data.map(this.formatId);
+    const q = query(collection(FirebaseApp.db, 'notes'), orderBy('created_at', 'asc'));
+    const res = await getDocs(q);
+    return res.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
   }
-  static async fetchById(noteId) {
-    return this.formatId((await axios.get(`${BASE_URL}/${noteId}`)).data);
-  }
-  static async deleteById(noteId) {
-    return (await axios.delete(`${BASE_URL}/${noteId}`)).data;
-  }
-  static async updateById(noteId, note) {
-    return this.formatId((await axios.patch(`${BASE_URL}/${noteId}`, note)).data);
-  }
-
-  static formatId(note) {
-    return {
-      ...note,
-      id: note.id.toString(),
-    };
-  }
+  static async fetchById(noteId) {}
+  static async deleteById(noteId) {}
+  static async updateById(noteId, note) {}
 }
