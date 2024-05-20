@@ -1,4 +1,3 @@
-import ButtonPrimary from 'components/ButtonPrimary/ButtonPrimary';
 import { Logo } from 'components/logo';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,9 +11,7 @@ const Header = () => {
       <div className="col-xs-12 col-sm-4">
         <Logo title="Notomatic" subtitle="Manage your notes" image={logoImg} onClick={() => navigate('/')} />
       </div>
-      <div className="col-xs-12 col-sm-8 text-end">
-        <ButtonPrimary onClick={() => navigate('/note/new')}>Add note +</ButtonPrimary>
-      </div>
+      <div className="col-xs-12 col-sm-8 text-end"></div>
     </div>
   );
 };
