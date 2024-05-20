@@ -1,7 +1,7 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, orderBy, query, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore';
 import { FirebaseApp } from 'utils/firebase';
 
-const BASE_URL = 'http://localhost:3200/notes';
+const BASE_URL = 'notamatic-c316d';
 
 export class NoteAPI {
   static async create(note) {
@@ -32,5 +32,16 @@ export class NoteAPI {
       noteId,
       ...note,
     };
+  }
+
+  static onShouldSyncNote(onChange) {
+    const q = query(collection(FirebaseApp.db, 'notes'));
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      const isUserPerformingChange = querySnapshot.metadata.hasPendingWrites;
+      if (!isUserPerformingChange) {
+        onChange();
+      }
+    });
+    return unsub;
   }
 }

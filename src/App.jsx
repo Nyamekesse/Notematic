@@ -16,7 +16,10 @@ export function App() {
     dispatch(setNoteList(noteList));
   }
   useEffect(() => {
-    fetchAllNotes();
+    const unsub = NoteAPI.onShouldSyncNote(fetchAllNotes);
+    return () => {
+      unsub();
+    };
   }, []);
   return (
     <div>
