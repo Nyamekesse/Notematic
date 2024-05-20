@@ -9,7 +9,7 @@ const NoteCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const submit = async (formValues) => {
-    const createdNote = await NoteAPI.create({ ...formValues, crested_at: new Date().toLocaleDateString() });
+    const createdNote = await NoteAPI.create({ ...formValues, created_at: new Date().toLocaleDateString() });
     dispatch(addNote(createdNote));
     navigate('/');
   };
