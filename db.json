@@ -4,19 +4,19 @@
       "id": "a83b",
       "title": "The rock",
       "content": "This the best rock movei",
-      "crested_at": "07/05/2024"
+      "created_at": "07/05/2024"
     },
     {
       "id": "da6e",
       "title": "Mummy",
       "content": "This is the first the mummy movie that came out",
-      "crested_at": "07/05/2024"
+      "created_at": "07/05/2024"
     },
     {
       "id": "174b",
       "title": "Wolf of all Street",
       "content": "The wolf of all street movie developed by Warner Bros",
-      "crested_at": "07/05/2024"
+      "created_at": "07/05/2024"
     }
   ]
 }
